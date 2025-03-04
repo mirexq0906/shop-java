@@ -44,15 +44,12 @@ dependencies {
     implementation("org.postgresql:postgresql")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.4")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-
-
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
     testImplementation("org.testcontainers:junit-jupiter:1.20.4")
     testImplementation("org.testcontainers:postgresql:1.20.4")
-
 }
 
 tasks.withType<Test> {

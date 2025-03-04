@@ -17,5 +17,5 @@ public class TrafficMapper {
         traffic.setCreateAt(trafficMessage.getCreatedAt());
         return traffic;
     }
-
+    
 }

@@ -7,9 +7,11 @@ import com.example.shop_java.service.TrafficAnalyzeService;
 import com.example.shop_java.service.TrafficService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -22,6 +24,7 @@ public class TrafficAnalyzeServiceImpl implements TrafficAnalyzeService {
 
     private final int MAX_LIMIT_RECORD = 10000;
 
+    @Scheduled(fixedDelay = 5, timeUnit = TimeUnit.HOURS)
     public void run() {
         this.analyzeService.deleteAll();
         int countPage = 0;

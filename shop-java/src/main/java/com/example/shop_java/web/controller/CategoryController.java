@@ -1,6 +1,5 @@
 package com.example.shop_java.web.controller;
 
-import com.example.shop_java.entity.user.User;
 import com.example.shop_java.service.CategoryService;
 import com.example.shop_java.web.dto.CategoryDto;
 import com.example.shop_java.web.dto.validation.OnCreate;
@@ -8,14 +7,12 @@ import com.example.shop_java.web.dto.validation.OnUpdate;
 import com.example.shop_java.web.mapper.CategoryMapper;
 import com.example.shop_java.web.response.category.CategoryListResponse;
 import com.example.shop_java.web.response.category.CategoryResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

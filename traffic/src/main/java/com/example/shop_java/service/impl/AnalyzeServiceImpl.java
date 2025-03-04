@@ -4,6 +4,7 @@ import com.example.shop_java.entity.Analyze;
 import com.example.shop_java.repository.AnalyzeRepository;
 import com.example.shop_java.service.AnalyzeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +16,8 @@ public class AnalyzeServiceImpl implements AnalyzeService {
     private final AnalyzeRepository analyzeRepository;
 
     @Override
-    public List<Analyze> findAll() {
-        return this.analyzeRepository.findAll();
+    public List<Analyze> findAll(Pageable pageable) {
+        return this.analyzeRepository.findAll(pageable).getContent();
     }
 
     @Override
