@@ -1,6 +1,8 @@
 package com.example.shop_java.configuration;
 
+import com.example.shop_java.entity.Product;
 import com.example.shop_java.entity.user.RefreshToken;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
@@ -9,11 +11,13 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisKeyValueAdapter;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.convert.KeyspaceConfiguration;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
 import java.time.Duration;
 import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableRedisRepositories(
@@ -32,6 +36,13 @@ public class RedisConfiguration {
                         redisProperties.getHost(), redisProperties.getPort()
                 )
         );
+    }
+
+    @Bean
+    public RedisTemplate<String, List<Product>> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, List<Product>> template = new RedisTemplate<>();
+        template.setConnectionFactory(redisConnectionFactory);
+        return template;
     }
 
     public class myKeyspaceConfiguration extends KeyspaceConfiguration {

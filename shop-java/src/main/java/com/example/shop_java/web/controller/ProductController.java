@@ -11,6 +11,7 @@ import com.example.shop_java.web.response.product.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +26,8 @@ public class ProductController {
     private final ProductService productService;
 
     private final ProductMapper productMapper;
+
+    private final RedisTemplate<String, String> redisTemplate;
 
     @GetMapping
     public ResponseEntity<ProductListResponse> findAll(ProductValidationDto productValidationDto) {
@@ -69,6 +72,15 @@ public class ProductController {
     public ResponseEntity<ProductResponse> delete(@PathVariable Long id) {
         productService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/analyze-product")
+    public ResponseEntity<ProductListResponse> recommendProduct() {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                productMapper.productListToProductListResponse(
+                        productService.getAnalyzeProducts()
+                )
+        );
     }
 
 }

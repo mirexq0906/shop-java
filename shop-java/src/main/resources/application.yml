@@ -3,9 +3,9 @@ spring:
     redis:
       host: localhost
       port: 6379
-    shell:
-      interactive:
-        enabled: true
+  shell:
+    interactive:
+      enabled: false
   web:
     resources:
       static-locations: file:../uploads/

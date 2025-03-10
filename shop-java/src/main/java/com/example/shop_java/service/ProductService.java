@@ -9,6 +9,10 @@ public interface ProductService {
 
     List<Product> findAll(ProductValidationDto productValidationDto);
 
+    List<Product> findAllByIds(List<Long> ids);
+
+    List<Product> getAnalyzeProducts();
+
     Product findById(Long id);
 
     Product save(Product product);

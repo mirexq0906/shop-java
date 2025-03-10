@@ -38,7 +38,7 @@ public class DatabaseCommand {
     private final ObjectMapper objectMapper;
     private final Random random = new Random();
 
-    @ShellMethod(key = "database:refresh")
+    @ShellMethod(key = "database-refresh")
     public void run() {
         this.userRepository.deleteAll();
         this.categoryRepository.deleteAll();

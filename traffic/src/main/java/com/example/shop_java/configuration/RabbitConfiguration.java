@@ -2,6 +2,10 @@ package com.example.shop_java.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -34,6 +38,21 @@ public class RabbitConfiguration {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
+    }
+
+    @Bean
+    public Queue trafficQueue() {
+        return new Queue("traffic.queue");
+    }
+
+    @Bean
+    public DirectExchange topicExchange() {
+        return new DirectExchange("direct.traffic.exchange");
+    }
+
+    @Bean
+    public Binding binding() {
+        return BindingBuilder.bind(trafficQueue()).to(topicExchange()).with("traffic.queue");
     }
 
 }
