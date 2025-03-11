@@ -1,6 +1,6 @@
 package com.example.shop_java.scheduler;
 
-import com.example.shop_java.entity.Analyze;
+import com.example.shop_java.configuration.properties.AppCacheProperties;
 import com.example.shop_java.entity.Product;
 import com.example.shop_java.service.ProductService;
 import com.example.shop_java.web.client.AnalyzeProductClient;
@@ -38,7 +38,7 @@ public class AnalyzeProductScheduled implements Runnable {
 
         List<Product> productList = productService.findAllByIds(analyzeProductIdList);
 
-        redisTemplate.opsForValue().set("popular-view-product", productList);
+        redisTemplate.opsForValue().set(AppCacheProperties.POPULAR_VIEW_PRODUCTS, productList);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.shop_java.service.impl;
 
+import com.example.shop_java.configuration.properties.AppCacheProperties;
 import com.example.shop_java.entity.Category;
 import com.example.shop_java.exception.EntityNotFoundException;
 import com.example.shop_java.repository.CategoryRepository;
@@ -11,12 +12,11 @@ import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = "category")
+@CacheConfig(cacheNames = AppCacheProperties.CATEGORY)
 public class CategoryServiceImpl implements CategoryService, EntityExistService {
 
     private final CategoryRepository categoryRepository;

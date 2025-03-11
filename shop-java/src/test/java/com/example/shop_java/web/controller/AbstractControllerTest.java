@@ -13,10 +13,12 @@ import com.example.shop_java.service.*;
 import com.example.shop_java.service.user.AuthService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.redis.testcontainers.RedisContainer;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -95,11 +97,19 @@ public class AbstractControllerTest {
     @Autowired
     protected ObjectMapper objectMapper;
 
+    @Autowired
+    protected RedisTemplate redisTemplate;
+
     protected static PostgreSQLContainer<?> postgreSQLContainer;
+
+    protected static RedisContainer redisContainer;
 
     static {
         postgreSQLContainer = new PostgreSQLContainer<>(DockerImageName.parse("postgres:12.3"));
+        redisContainer = new RedisContainer(DockerImageName.parse("redis:7.0.12"))
+                .withExposedPorts(6379).withReuse(true);
         postgreSQLContainer.start();
+        redisContainer.start();
     }
 
     @DynamicPropertySource
@@ -107,6 +117,8 @@ public class AbstractControllerTest {
         registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
         registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
         registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
+        registry.add("spring.data.redis.host", redisContainer::getHost);
+        registry.add("spring.data.redis.port", () -> redisContainer.getMappedPort(6379).toString());
     }
 
     @BeforeAll
@@ -125,6 +137,7 @@ public class AbstractControllerTest {
 
     @BeforeEach
     void setUp() {
+        redisTemplate.getConnectionFactory().getConnection().serverCommands().flushAll();
         List<Category> categories = new ArrayList<>();
         List<Product> products = new ArrayList<>();
 

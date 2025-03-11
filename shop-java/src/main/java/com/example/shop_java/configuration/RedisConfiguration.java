@@ -1,8 +1,8 @@
 package com.example.shop_java.configuration;
 
+import com.example.shop_java.configuration.properties.AppCacheProperties;
 import com.example.shop_java.entity.Product;
 import com.example.shop_java.entity.user.RefreshToken;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
@@ -47,14 +47,13 @@ public class RedisConfiguration {
 
     public class myKeyspaceConfiguration extends KeyspaceConfiguration {
 
-        public static final String REFRESH_TOKEN = "refresh_token";
-
         @Override
         protected Iterable<KeyspaceSettings> initialConfiguration() {
-            KeyspaceSettings keyspaceSettings = new KeyspaceSettings(RefreshToken.class, REFRESH_TOKEN);
+            KeyspaceSettings keyspaceSettings = new KeyspaceSettings(RefreshToken.class, AppCacheProperties.REFRESH_TOKEN);
             keyspaceSettings.setTimeToLive(refreshTokenExpired.getSeconds());
             return Collections.singleton(keyspaceSettings);
         }
+
     }
 
 }

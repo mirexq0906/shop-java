@@ -9,9 +9,6 @@ import com.example.shop_java.web.mapper.ProductMapper;
 import com.example.shop_java.web.response.product.ProductListResponse;
 import com.example.shop_java.web.response.product.ProductResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,8 +23,6 @@ public class ProductController {
     private final ProductService productService;
 
     private final ProductMapper productMapper;
-
-    private final RedisTemplate<String, String> redisTemplate;
 
     @GetMapping
     public ResponseEntity<ProductListResponse> findAll(ProductValidationDto productValidationDto) {

@@ -1,5 +1,6 @@
 package com.example.shop_java.listener;
 
+import com.example.shop_java.configuration.properties.AppRabbitmqProperties;
 import com.example.shop_java.event.TrafficSendEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -12,9 +13,11 @@ public class TrafficEventListener implements ApplicationListener<TrafficSendEven
 
     private final RabbitTemplate rabbitTemplate;
 
+    private final AppRabbitmqProperties rabbitProperties;
+
     @Override
     public void onApplicationEvent(TrafficSendEvent event) {
-        this.rabbitTemplate.convertAndSend("traffic.queue", event.getTraffic());
+        this.rabbitTemplate.convertAndSend(rabbitProperties.getTrafficService().getRoutingKey(), event.getTraffic());
     }
 
 }
